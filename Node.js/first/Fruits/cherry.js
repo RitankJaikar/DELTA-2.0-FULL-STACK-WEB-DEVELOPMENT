@@ -1,0 +1,1 @@
+module.exports={1:"Cherry",2:"Red"};

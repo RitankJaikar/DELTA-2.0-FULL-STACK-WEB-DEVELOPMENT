@@ -1,0 +1,16 @@
+Netflix logo downloaded, by right clicking Netflix's logo element, it is .sgv ,i.e. logo. Then paste on my logo.svg.
+
+Download all images, videos & logos. And also rename accordingly
+
+Use main html tag. For main content.
+
+* -> margin and padding 0
+
+Set background-image of .main class. bg.image.
+height: 80vh. vh is relative to 1% of the height of viewport.
+
+.main .box -> same height, width 100%, bgcolor-black and opacity 0.4
+This will lighter and darker the image as needed
+CSS opacity range- 0-1
+
+WILL DO IN FUTURE.

@@ -1,0 +1,50 @@
+/* #outer{
+    height: 200px;
+    width: 70px;
+    border: 2px solid black;
+}
+
+.inner{
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+#inner1{
+    background-color: red;
+}
+
+#inner2{
+    background-color: yellow;
+}
+
+#inner3{
+    background-color: green;
+}
+*/
+
+
+/* div{
+    height: 150px;
+    width: 300px;
+    background-color: grey;
+    border: 50px dotted black;
+    margin: 20px 1em 40px 2em;
+    padding: 1em;
+} */
+
+/* .div{
+    height: 100px;
+    width: 100px;
+    background-color: pink;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: inline-block;
+} */
+
+/* li{
+    display: inline;
+}    */
+

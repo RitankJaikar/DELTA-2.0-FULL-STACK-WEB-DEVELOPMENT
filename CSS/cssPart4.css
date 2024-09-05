@@ -1,0 +1,30 @@
+.card{
+    height: 250px;
+    width: 200px;
+    display: inline-block;
+    margin: 15px;
+    box-shadow: 0px 4px 8px black;
+    border-radius: 5%;
+    background-color: aqua;
+    transition: 0.8s;
+}
+
+img{
+    height: 150px;
+    width: 150px;
+    border-radius: 5%;
+}
+
+span{
+    display: block;
+    text-align: center;
+}
+
+.card:hover{
+    box-shadow: 0px 8px 16px black;
+}
+
+.content{
+    padding: 4px;
+    text-align: center;
+}

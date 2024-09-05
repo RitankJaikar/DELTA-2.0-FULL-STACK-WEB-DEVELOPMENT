@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <style>
+        table, tr, th, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h2>Users Data:</h2>
+    <ol>
+        <% for(data of usersData){ %>
+            <li>
+                <ul>
+                    <li>ID: <%= data.id %></li>
+                    <li>Username: <%= data.username %></li>
+                    <li>Email: <%= data.email %></li>
+                </ul>
+            </li>
+        <% } %>
+    </ol> -->
+
+    <h2>Users Data</h2>
+    <table>
+        <tr>
+            <th>S.No.</th>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Edit Username</th>
+            <th>Delete User</th>
+        </tr>
+        <% let i=1; for(data of usersData){ %>
+        <tr>
+            <td><%= i %></td>
+            <td><%= data.id %></li></td>
+            <td><%= data.username %></td>
+            <td><%= data.email %></td>
+            <td style="text-align: center;">
+                <form method="GET" action="/user/<%= data.id %>/edit">
+                    <button>Edit</button>
+                </form>
+            </td>
+            <td style="text-align: center;">
+                <form method="GET" action="/user/<%= data.id %>/delete">
+                    <button>Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% i++; } %>
+    </table>
+</body>
+</html>

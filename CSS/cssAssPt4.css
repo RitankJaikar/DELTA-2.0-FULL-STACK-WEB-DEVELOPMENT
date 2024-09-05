@@ -1,0 +1,41 @@
+#container{
+    height: 400px;
+    width: 400px;
+    border: 3px solid rgb(5, 152, 152);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    text-align: center;
+    align-items: center;
+}
+
+#container div{
+    height: 100px;
+    width: 100px;
+    border: 3px solid black;
+    font-size: 50px;
+    background-color: grey;
+    border-radius: 10px;
+}
+
+#nevbar{
+    height: 50px;
+    width: 900px;
+    background-color: pink;
+    border: 3px solid rgb(5, 152, 152);
+    border-radius: 10px;
+    font-size: 24px;
+    display: flex;
+    /* justify-content: flex-start;
+    align-content: center; */  
+    /* no need */
+}
+
+#nevbar div{
+    height: 50px;
+    width: 80px;
+    margin-left: 5px;
+    line-height: 2;
+    /* border-radius: 10px; */
+}

@@ -1,0 +1,162 @@
+#container{
+    height: 400px;
+    width: 400px;
+    border: 3px solid rgb(5, 152, 152);
+    border-radius: 10px;
+    text-align: center;
+    display: grid;
+    /* grid-template-columns: 100px 100px 100px; 
+    grid-template-rows: 100px 100px 100px; */
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    /* row-gap: 10px;
+    column-gap: 10px; */
+    grid-gap: 10px 10px;
+}
+
+#container div{
+    /* height: 100px; */
+    /* width: 100px; */
+    border: 3px solid black;
+    font-size: 50px;
+    background-color: grey;
+    border-radius: 10px;
+    animation-name: animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in; 
+    animation-direction: alternate;
+}
+
+@keyframes animation{
+    from{
+        font-size:10px;
+        background-color: red;
+    }
+    50%{
+        background-color: green;
+    }
+    to{
+        background-color: blue;
+        font-size:100px;
+    }
+}
+
+#nevbar{
+    height: 50px;
+    width: 900px;
+    background-color: pink;
+    border: 3px solid rgb(5, 152, 152);
+    border-radius: 10px;
+    font-size: 24px;
+    display: flex;
+    /* justify-content: flex-start;
+    align-content: center; */  
+    /* no need */
+}
+
+#nevbar div{
+    height: 50px;
+    width: 80px;
+    margin-left: 5px;
+    line-height: 2;
+    /* border-radius: 10px; */
+}
+
+
+/*  */
+
+
+#grid{
+    /* height: 650px;
+    width: 1200px; */
+    height: 100vh;
+    display: grid;
+    grid-template-rows: repeat(12,1fr);
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 10px;
+}
+
+#grid div{
+    background-color: pink;
+}
+
+#header{
+    grid-column: 1/span 12;
+}
+
+#sidebar{
+    grid-row: 2/span 10;
+    grid-column: 1/span 3;
+}
+
+#nevigation{
+    grid-row: 2/span 1;
+    grid-column: 4/span 6;
+}
+
+#ads{
+    grid-row: 2/span 10;
+    grid-column: 10/span 3;
+}
+
+#main{
+    grid-row: 3/span 9;
+    grid-column: 4/span 6;
+}
+
+#footer{
+    grid-row: 12/span 1;
+    grid-column: 1/span 12;
+}
+
+@media (max-width:720px) {  
+    #header{
+        grid-row: 1/span 1;
+        grid-column: 1/span 12;
+    }
+
+    #nevigation{
+        grid-row: 2/span 1;
+        grid-column: 1/span 12;
+    }
+    
+    #sidebar{
+        grid-row: 3/span 9;
+        grid-column: 1/span 3;
+    }
+
+    #main{
+        grid-row: 3/span 9;
+        grid-column: 4/span 9;
+    }
+    
+    #ads{
+        grid-row: 12/span 1;
+        grid-column: 1/span 3;
+    }
+    
+    #footer{
+        grid-column: 4/span 9;
+    }
+}
+
+/*  */
+
+.loader{
+    height: 120px;
+    width: 120px;
+    border: 20px solid #f3f3f3;
+    border-top: 20px solid goldenrod;
+    border-radius: 50%;
+    animation: loader 1.2s ease 0s infinite normal;
+}
+
+@keyframes loader{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

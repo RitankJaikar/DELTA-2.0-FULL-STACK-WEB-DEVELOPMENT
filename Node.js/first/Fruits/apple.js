@@ -1,0 +1,1 @@
+module.exports={1:"Apple",2:"Red"};
