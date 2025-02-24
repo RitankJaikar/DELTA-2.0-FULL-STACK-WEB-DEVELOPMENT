@@ -5,8 +5,8 @@ import { sum } from './helper'
 
 function App() {
   let winCondition = (ticket) => {
-    // return sum(ticket) === 15;
-    return ticket.every((num) => num === ticket[0]);
+    return sum(ticket) >= 20;
+    //return ticket.every((num) => num === ticket[0]);  //All digits are same
   }
 
   return (

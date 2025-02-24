@@ -25,11 +25,11 @@ export default function Todo() {
                 {
                     todos.map(todo => {
                         return (
-                            <li key={todo.key}>
+                            <li key={todo.key} style={{marginBottom: "8px"}}>
                                 <span style={todo.isDone ? {textDecoration: "line-through"} : {}}>
                                     {todo.task}
                                 </span>
-                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button onClick={() => deleteTask(todo.key)}>Delete</button>
                                 &nbsp;&nbsp;
                                 <button onClick={() => markTaskAsDone(todo.key)}>Mark As Done</button>
