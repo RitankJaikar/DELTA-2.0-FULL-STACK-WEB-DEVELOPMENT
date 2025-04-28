@@ -1,27 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-</head>
-<body>
-    <h3>Edit Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-        <input type="text" value="<%= listing.title %>" name="listing[title]" required>
-        <br><br>
-        <textarea name="listing[description]"><%= listing.description %></textarea>
-        <br><br>
-        <input type="text" value="<%= listing.image %>" name="listing[image]">
-        <br><br>
-        <input type="number" value="<%= listing.price %>" name="listing[price]">
-        <br><br>
-        <input type="text" value="<%= listing.country %>"name="listing[country]">
-        <br><br>
-        <input type="text" value="<%= listing.location %>" name="listing[location]">
-        <br><br>
-        <button>Edit</button>
-        &nbsp;&nbsp;&nbsp;
-    </form>
-</body>
-</html>
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h3 class="mt-4">Edit Listing</h3>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="mb-4 mt-4 needs-validation" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input id="title" type="text" value="<%= listing.title %>" name="listing[title]" class="form-control" required>
+                <div class="valid-feedback">Title looks great!</div>
+                <div class="invalid-feedback">Please provide a strong and catchy title.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="listing[description]" class="form-control" required><%= listing.description %></textarea>
+                <div class="valid-feedback">Looks good! A good description helps.</div>
+                <div class="invalid-feedback">Please add a proper description for the listing.</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Original Image</label><br>
+                <img src="<%= origImg %>" alt="Original Listing Image" class="img-fluid rounded mt-1" style="width: 400px; max-width: 100%; height: auto;">
+            </div>
+
+            <div class="mb-3">
+                <label for="image-link" class="form-label">Upload Image</label>
+                <input id="image-link" type="file" name="listing[image]" class="form-control">
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please upload an image.</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input id="price" type="number" value="<%= listing.price %>" name="listing[price]" class="form-control" required>
+                    <div class="valid-feedback">Perfect! Price looks good.</div>
+                    <div class="invalid-feedback">Please enter a valid price.</div>
+                </div>
+                <div class="col-md-8 mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input id="country" type="text" value="<%= listing.country %>" name="listing[country]" class="form-control" required>
+                    <div class="valid-feedback">Country added successfully.</div>
+                    <div class="invalid-feedback">Country field cannot be empty.</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input id="location" type="text" value="<%= listing.location %>" name="listing[location]" class="form-control" required>
+                <div class="valid-feedback">Nice! Location updated.</div>
+                <div class="invalid-feedback">Please enter a valid location.</div>
+            </div>
+
+            <button type="submit" class="btn btn-dark primary-btn">Update</button>
+        </form>
+    </div>
+</div>

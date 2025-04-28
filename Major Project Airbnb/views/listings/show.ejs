@@ -1,24 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-</head>
-<body>
-    <h3>Listing Details: </h3>
-    <ul>
-        <li><%= listing.title %></li>
-        <li><%= listing.description %></li>
-        <li> &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
-        <li><%= listing.location %></li>
-        <li><%= listing.country %></li>
-    </ul>
-    <br>
-    <a href="/listings/<%= listing._id %>/edit">Edit</a>
-    <br><br>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-        <button>Delete</button>
-    </form>
-</body>
-</html>
+<% layout("/layouts/boilerplate") %>
+<h2 class="mt-4 text-center"><%= listing.title %></h2>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <img src="<%= listing.image.url %>" class="card-img-top show-image" alt="listing-image" style="max-height: 400px; object-fit: cover;">
+            <div class="card-body mt-2">
+                <p class="text-muted fw-semibold mb-2">
+                  Listed by: <span class="text-dark"><%= listing.owner.username %></span>
+                </p>
+                <p class="card-text"><%= listing.description %></p>
+                <p class="card-text mb-1"><strong>Price:</strong> ₹<%= listing.price.toLocaleString("en-IN") %></p>
+                <p class="card-text mb-1"><strong>Location:</strong> <%= listing.location %></p>
+                <p class="card-text"><strong>Country:</strong> <%= listing.country %></p>
+
+                <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+                  <div class="d-flex justify-content-between mt-4">
+                      <a href="/listings/<%= listing._id %>/edit" class="btn primary-btn">Edit</a>
+
+                      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                          <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this listing?')">Delete</button>
+                      </form>
+                  </div>
+                <% } %>
+
+                <div class="map-container">
+                  <h3>Where you'll be</h3>
+                  <div class="map-wrapper">
+                    <div id="map"></div>
+                  </div>
+                </div>
+
+                <div class="container my-4 p-4 border rounded shadow-sm">
+                    <h4 class="mb-4">Leave a Review</h4>
+                    <form action="/listings/<%= listing.id %>/reviews" method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                          <label for="rating" class="form-label">Rating</label>
+                          <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" />
+                          <div class="d-flex justify-content-between px-1 mt-2" id="emojiContainer">
+                              <span class="emoji">😠</span>
+                              <span class="emoji">😕</span>
+                              <span class="emoji">😐</span>
+                              <span class="emoji">😊</span>
+                              <span class="emoji">😍</span>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="comment" class="form-label">Comment</label>
+                          <textarea cols="30" rows="5" id="comment" name="review[comment]" class="form-control" placeholder="Write your thoughts..." required></textarea>
+                          <div class="valid-feedback">Thank you for your feedback!</div>
+                          <div class="invalid-feedback">Please enter your review comment before submitting.</div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-dark">Submit</button>
+                    </form>
+                </div>
+
+                <div class="mt-5">
+                    <h4 class="mb-4">All Reviews</h4>
+                    <% if (listing.reviews.length === 0) { %>
+                      <p class="text-muted">No reviews yet.</p>
+                    <% } else { %>
+                      <% listing.reviews.forEach((review) => { %>
+                        <div class="border rounded p-3 mb-3 shadow-sm">
+                          <div class="mb-2">
+                            <% for (let i = 1; i <= 5; i++) { %>
+                              <i class="fa-star <%= i <= review.rating ? 'fas text-warning' : 'far text-muted' %>"></i>
+                            <% } %>
+                          </div>
+                          <p class="fw-bold mb-1">By <%= review.author?.username || "Unknown" %></p>
+                          <p class="mb-1"><%= review.comment %></p>
+                          <small class="text-muted">Posted on <%= new Date(review.createdAt).toLocaleDateString() %></small>
+                          <% if(currUser && review.author._id.equals(currUser._id)) { %>
+                            <form action="/listings/<%= listing.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
+                              <button class="btn btn-sm btn-dark mt-3">Delete</button>
+                            </form>
+                          <% } %>
+                        </div>
+                      <% }) %>
+                    <% } %>
+                </div>                  
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  const coordinates = JSON.parse('<%= JSON.stringify(listing.geometry.coordinates) %>');
+  // console.log(coordinates);
+
+	mapboxgl.accessToken = '<%= process.env.MAP_TOKEN %>';
+  const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+      zoom: 1 // starting zoom
+  });
+
+  const popup = new mapboxgl.Popup({ offset: 25 })
+  .setHTML(`
+    <div style="font-family: Arial, sans-serif; max-width: 200px;">
+      <h4 style="margin: 0; font-size: 18px; color: #333;"><%= listing.title %></h4>
+      <p style="margin-top: 5px; font-size: 14px; color: #666;">Exact location will be provided after booking</p>
+    </div>
+  `);
+
+  const marker = new mapboxgl.Marker({ color: "#fe424d" })
+    .setLngLat(coordinates)
+    .setPopup(popup)
+    .addTo(map);
+</script>
+<script>
+    const ratingInput = document.getElementById("rating");
+    const emojis = document.querySelectorAll("#emojiContainer .emoji");
+  
+    const updateEmojis = (value) => {
+      emojis.forEach((emoji, index) => {
+        if (index < value) {
+          emoji.style.filter = "grayscale(0%)"; // colored
+          emoji.style.transform = "scale(1.2)";
+        } else {
+          emoji.style.filter = "grayscale(100%)"; // greyed out
+          emoji.style.transform = "scale(1)";
+        }
+      });
+    };
+  
+    ratingInput.addEventListener("input", () => {
+        updateEmojis(ratingInput.value);
+    });
+
+    // Initialize on load
+    updateEmojis(ratingInput.value);
+
+    emojis.forEach((emoji, index) => {
+        emoji.addEventListener("click", () => {
+            const newValue = index + 1;
+            ratingInput.value = newValue;
+            updateEmojis(newValue);
+            updateSliderBackground(newValue);
+        });
+    });
+</script>

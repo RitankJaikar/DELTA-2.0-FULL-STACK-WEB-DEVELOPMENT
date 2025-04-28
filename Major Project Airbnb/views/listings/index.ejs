@@ -1,17 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-</head>
-<body>
-    <form method="GET" action="/listings/new">
-        <button>Create New Listing</button>
-    </form>
-    <h3>All Listing</h3>
-    <% for(let list of allListings) { %>
-        <li><a href="/listings/<%= list._id %>"><%= list.title %></a></li>
+<% layout("/layouts/boilerplate") %>
+
+<!-- Filters Section -->
+<div id="filters" class="d-flex align-items-center gap-3 p-3 mt-4 filter-container">
+    <h5 class="mt-1">Filters:</h5>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-trending">
+        <i class="fa-solid fa-fire me-2"></i>
+        Trending
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-new">
+        <i class="fa-solid fa-star me-2"></i>
+        New
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-popular">
+        <i class="fa-solid fa-thumbs-up me-2"></i>
+        Popular
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-featured">
+        <i class="fa-solid fa-crown me-2"></i>
+        Featured
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-rooms">
+        <i class="fa-solid fa-bed me-2"></i>
+        Rooms
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-cabins">
+        <i class="fa-solid fa-house me-2"></i>
+        Cabins
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-omg">
+        <i class="fa-solid fa-exclamation me-2"></i>
+        OMG!
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-amazing-view">
+        <i class="fa-solid fa-eye me-2"></i>
+        Amazing View
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-beachfront">
+        <i class="fa-solid fa-water me-2"></i>
+        Beachfront
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-luxe">
+        <i class="fa-solid fa-gem me-2"></i>
+        Luxe
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-tropical">
+        <i class="fa-solid fa-leaf me-2"></i>
+        Tropical
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-lake">
+        <i class="fa-solid fa-water me-2"></i>
+        Lake
+    </div>
+    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-mountains">
+        <i class="fa-solid fa-mountain me-2"></i>
+        Mountains
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-4">
+    <% for(let listing of allListings) { %>
+        <a class="card col" href="/listings/<%= listing._id %>">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing-image" style="height: 20rem;">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+                <p class="card-text">
+                    <b><%= listing.title %></b>
+                    <br>
+                    &#8377; <%= listing.price.toLocaleString("en-IN") %> / day
+                </p>
+            </div>
+        </a>
     <% } %>
-</body>
-</html>
+</div>

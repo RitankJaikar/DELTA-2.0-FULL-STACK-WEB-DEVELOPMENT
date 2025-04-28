@@ -1,100 +1,109 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
-const Listing = require("./models/listing");
+require("dotenv").config();
+const cors = require("cors");
 const path = require("path");
 const methodOverride = require("method-override");
+const ejsMate = require('ejs-mate');
+const ExpressError = require("./utils/ExpressError");
+const listingRouter = require("./routes/listing");
+const reviewRouter = require("./routes/review");
+const expressSession = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+const userRouter = require("./routes/user");
+const connectMongo = require("connect-mongo")
 
-const MONGO_URL = 'mongodb://127.0.0.1:27017/wonderlust';
+// Connect to DB
+require("./config/db");
 
-main()
-    .then(() => {
-        console.log("connected to DB");
-    })
-    .catch((err) => {
-        console.log(err);
-    })
 
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
-
+// Middwares
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.engine('ejs', ejsMate);
+app.use(express.static(path.join(__dirname, "public")));
+app.set('trust proxy', 1);
+app.use(
+    expressSession({
+        secret: process.env.SESSION_SECRET,
+        saveUninitialized: false,
+        resave: false,
+        cookie: {
+            //default name: "connect.sid"
+            // expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+            maxAge: 1000*60*60*24*7,    // 7 days
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", // only secure in production
+            sameSite: 'lax', // or 'none' (depending on your frontend/backend connection)
+        },
+        store: connectMongo.create({
+            // collectionName: "sessions"  //default
+            mongoUrl: process.env.MONGODB_URI2,
+            crypto: {
+                secret: process.env.SESSION_SECRET,
+            },
+            touchAfter: 24 * 3600
+        })
+    })
+);
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user; //for validating options in Navbar.ejs
+    next();
+});
+
+
+// Matched route for debugging
+// app.use((req, res, next) => {
+//     console.log("Matched route:", req.method, req.originalUrl);
+//     next();
+// });
+
+// Routes
 app.get("/", (req, res) => {
     res.send("Hi, I am root.");
-})
+});
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
-// app.get("/testListing", async (req, res) => {
-//     let sampleListing =  new Listing({
-//         title: "My new villa",
-//         description: "By the mountians",
-//         price: 1200,
-//         location: "Shimla",
-//         country: "India"
-//     })
-
-//     console.log("Sample listing before saving:", sampleListing);
-//     await sampleListing.save();
-//     console.log("sample was saved:", sampleListing);
-//     res.send("successful test");
-// })
+// Unmatched route for debugging
+// app.use((req, res, next) => {
+//     console.log("Unmatched route:", req.method, req.originalUrl);
+//     next();
+// });
 
 
-//index route
-app.get("/listings", async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("./listings/index.ejs",{allListings});
-})
+// Page not Found route
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page not Found!"));
+});
 
-//new lisitng, this should be before /:id route
-app.get("/listings/new", async (req, res) => {
-    res.render("./listings/new.ejs");
-})
+// Error middleware
+app.use((err, req, res, next) => {
+    let {statusCode=500, message="Something Went Wrong"} = err;
+    res.status(statusCode).render("error.ejs", {message});
+});
 
-//show route
-app.get("/listings/:id", async (req, res) => {
-    let {id} = req.params;
-    // console.log(id);
-    const listing = await Listing.findById(id);
-    // console.log(listing);
-    res.render("./listings/show.ejs", {listing});
-})
+// For dev
+// app.listen(8080, () => {
+//     console.log("server is listning to port 8080");
+// });
 
-//create route
-app.post("/listings", async (req, res) => {
-    // let {title, description, image, price, country, location} = req.body;
-    const newListing = new Listing(req.body.listing);
-    // console.log(newListing);
-    await newListing.save();
-    res.redirect("/listings");
-})
-
-//edit route
-app.get("/listings/:id/edit", async (req, res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id);
-    // console.log(listing);
-    res.render("./listings/edit.ejs", {listing});
-})
-
-//update route
-app.put("/listings/:id", async (req, res) => {
-    let {id} = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    res.redirect(`/listings/${id}`);
-})
-
-//delete route
-app.delete("/listings/:id", async (req, res) => {
-    let {id} = req.params;
-    await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
-})
-
-app.listen(8080, () => {
-    console.log("server is listning to port 8080");
-})
+// For prod
+module.exports = app;

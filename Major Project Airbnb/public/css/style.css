@@ -1,0 +1,305 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Navbar */
+
+.navbar {
+  padding: 4px 0px 4px 0px;
+  background-color: white;
+  transition: top 0.4s, height 0.3s ease-in-out; /* Smooth transition */
+}
+
+.search-btn {
+  background-color: #fe424d;
+  color: white;
+}
+
+.search-btn:hover {
+  background-color: #fe424d;
+  color: white;
+}
+
+.search-btn i {
+  display: inline;
+}
+
+@media (max-width: 992px) {
+  .search-container {
+    display: none !important;
+  }
+}
+
+.fa-compass {
+  color: #fe424d;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: #222222 !important;
+}
+
+.f-info-links a,
+.f-info-socials a {
+  text-decoration: none;
+  color: #222222;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-info-socials {
+  gap: 2rem;
+}
+
+.f-info {
+  text-align: center;
+  height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: space-evenly;
+}
+
+/* Cards */
+
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  text-decoration: none !important;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 0px !important;
+}
+
+.card-text p {
+  font-weight: 400 !important;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
+}
+
+.primary-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
+
+/* Review Styling */
+
+.emoji {
+  font-size: 1.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fe424d;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  margin-top: -6px;
+  position: relative;
+  z-index: 2;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fe424d;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+/* Map */
+
+.map-container {
+  position: relative;
+  max-width: 100%;
+  height: 400px; /* Adjust based on desired map height */
+  background-color: #f9f9f9; /* Light background for wrapper */
+  border-radius: 12px; /* Rounded corners for the wrapper */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  overflow: hidden; /* Ensure no overflow from the container */
+  padding: 20px;
+  margin-bottom: 20px; /* Adds space below the map */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.map-container h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center; /* Center align the heading */
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px; /* Rounded corners for the container around the map */
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px; /* Rounded corners for the map itself */
+}
+
+/* Filters */
+
+#filters {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  /* height: 72px; */
+}
+
+.filter-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  padding-right: 10px;
+}
+
+@media (min-width: 992px) {
+  .filter-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-container {
+      overflow-x: hidden;
+  }
+
+  .filter-container:hover {
+      overflow-x: scroll;
+  }
+}
+
+.filter {
+  background-color: #e9ecef;
+  color: #495057;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.filter:hover {
+  background-color: #fe424d; /* Red */
+  color: white;
+}
+
+.filter i {
+  font-size: 18px;
+}
+
+/* Custom hover colors for each filter */
+.filter-trending:hover {
+  background-color: #ff5733; /* Trending - Orange */
+}
+
+.filter-new:hover {
+  background-color: #28a745; /* New - Green */
+}
+
+.filter-popular:hover {
+  background-color: #ffc107; /* Popular - Yellow */
+}
+
+.filter-featured:hover {
+  background-color: #007bff; /* Featured - Blue */
+}
+
+.filter-surfing:hover {
+  background-color: #f39c12; /* Surfing - Yellow */
+}
+
+.filter-rooms:hover {
+  background-color: #17a2b8; /* Rooms - Teal */
+}
+
+.filter-cabins:hover {
+  background-color: #6c757d; /* Cabins - Grey */
+}
+
+.filter-omg:hover {
+  background-color: #e83e8c; /* OMG! - Pink */
+}
+
+.filter-amazing-view:hover {
+  background-color: #6610f2; /* Amazing View - Purple */
+}
+
+.filter-beachfront:hover {
+  background-color: #20c997; /* Beachfront - Teal */
+}
+
+.filter-islands:hover {
+  background-color: #fd7e14; /* Islands - Orange */
+}
+
+.filter-luxe:hover {
+  background-color: #343a40; /* Luxe - Dark */
+}
+
+.filter-tropical:hover {
+  background-color: #fd3a3a; /* Tropical - Red */
+}
+
+.filter-lake:hover {
+  background-color: #1d88a3; /* Lake - Blue */
+}
+
+.filter-mountains:hover {
+  background-color: #6f42c1; /* Mountains - Purple */
+}
