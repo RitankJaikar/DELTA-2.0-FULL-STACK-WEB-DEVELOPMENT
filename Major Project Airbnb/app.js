@@ -14,7 +14,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const userRouter = require("./routes/user");
-const connectMongo = require("connect-mongo")
+const connectMongo = require("connect-mongo");
+const categories = require("./utils/categories");
 
 // Connect to DB
 require("./config/db");
@@ -56,7 +57,7 @@ app.use(
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));   // Passport will treat the email field from the login form as the "username"
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -64,6 +65,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user; //for validating options in Navbar.ejs
+    res.locals.categories = categories
     next();
 });
 
@@ -76,7 +78,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-    res.send("Hi, I am root.");
+    res.render("home.ejs");
 });
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -101,9 +103,9 @@ app.use((err, req, res, next) => {
 });
 
 // For dev
-// app.listen(8080, () => {
-//     console.log("server is listning to port 8080");
-// });
+app.listen(8080, () => {
+    console.log("server is listning to port 8080");
+});
 
 // For prod
 module.exports = app;

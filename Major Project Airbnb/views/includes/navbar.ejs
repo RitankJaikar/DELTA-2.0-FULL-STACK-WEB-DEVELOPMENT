@@ -19,9 +19,14 @@
       <div class="navbar-nav d-flex align-items-center">
         <a class="nav-link active" href="/listings">Explore</a>
       </div>
-      <div class="navbar-nav ms-auto search-container">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required>
+      <div class="search-wrapper navbar-nav ms-auto search-container">
+        <form class="d-flex" role="search" method="GET" action="/listings?">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" required value="<%= typeof search !== 'undefined' ? search : '' %>">
+          <% if (typeof search !== 'undefined' && search !== '') { %>
+            <a href="/listings" class="clear-icon me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </a>
+          <% } %>
           <button class="btn search-btn d-flex justify-content-center align-items-center gap-2" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
             Search
@@ -29,12 +34,31 @@
         </form>
       </div>
       <div class="navbar-nav ms-auto d-flex align-items-center">
+        <a class="nav-link" href="/listings/new">Add Property</a>
         <% if (!currUser) { %>
-          <a class="nav-link" href="/listings/new">Add Property</a>
           <a class="nav-link" href="/signup">Sign Up</a>
           <a class="nav-link" href="/login">Log In</a>
         <% } else { %>
-          <a class="nav-link" href="/logout">Log Out</a>
+          <!-- Always visible on all devices -->
+          <a href="/listings/owned" class="nav-link">My Properties</a>
+        
+          <!-- MOBILE ONLY: Profile and Logout (no user circle) -->
+          <a href="/profile" class="nav-link d-md-none">Profile</a>
+          <a class="nav-link text-danger d-md-none" href="/logout">Log Out</a>
+        
+          <!-- DESKTOP ONLY: User circle dropdown -->
+          <div class="dropdown d-none d-md-block ms-2">
+            <a class="nav-link dropdown-toggle d-flex align-items-center p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="rounded-circle primary-btn text-white d-flex align-items-center justify-content-center"
+                  style="width: 40px; height: 40px;">
+                <%= currUser.username.slice(0, 2).toUpperCase() %>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item text-danger" href="/logout" onclick="return confirm('Are you sure you want to log out?')">Log Out</a></li>
+            </ul>
+          </div>
         <% } %>
       </div>
     </div>

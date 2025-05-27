@@ -83,6 +83,13 @@ body {
   align-items: space-evenly;
 }
 
+.clear-icon {
+  cursor: pointer;
+  font-size: 1rem;
+  color: #888;
+  margin-top: 5px;
+}
+
 /* Cards */
 
 .card {
@@ -117,6 +124,11 @@ body {
 .primary-btn {
   background-color: #fe424d !important;
   border: none !important;
+  color: white;
+}
+
+.primary-btn:hover {
+  color: white !important;
 }
 
 /* Review Styling */
@@ -234,8 +246,12 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
 }
 
+.filter span {
+  margin-bottom: 2px;
+}
+
 .filter:hover {
-  background-color: #fe424d; /* Red */
+  background-color: #fe424d; /* Default */
   color: white;
 }
 
@@ -243,63 +259,43 @@ input[type="range"]::-moz-range-thumb {
   font-size: 18px;
 }
 
-/* Custom hover colors for each filter */
-.filter-trending:hover {
-  background-color: #ff5733; /* Trending - Orange */
+.filter-clear:hover {
+  background-color: #5c636a !important;
+  color: white;
 }
 
-.filter-new:hover {
-  background-color: #28a745; /* New - Green */
+/* Home Page */
+
+.hero-section h1 {
+  color: #222;
+  font-size: 3rem;
 }
 
-.filter-popular:hover {
-  background-color: #ffc107; /* Popular - Yellow */
+.hero-section p {
+  font-size: 1.2rem;
+  color: #555;
 }
 
-.filter-featured:hover {
-  background-color: #007bff; /* Featured - Blue */
+.card-title {
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
-.filter-surfing:hover {
-  background-color: #f39c12; /* Surfing - Yellow */
+.card-text {
+  color: #666;
 }
 
-.filter-rooms:hover {
-  background-color: #17a2b8; /* Rooms - Teal */
+.cta-section {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
 }
 
-.filter-cabins:hover {
-  background-color: #6c757d; /* Cabins - Grey */
+/* drop down */
+
+.dropdown-item:focus {
+  background-color: #fe424d !important;
+  color: white !important;
 }
 
-.filter-omg:hover {
-  background-color: #e83e8c; /* OMG! - Pink */
-}
-
-.filter-amazing-view:hover {
-  background-color: #6610f2; /* Amazing View - Purple */
-}
-
-.filter-beachfront:hover {
-  background-color: #20c997; /* Beachfront - Teal */
-}
-
-.filter-islands:hover {
-  background-color: #fd7e14; /* Islands - Orange */
-}
-
-.filter-luxe:hover {
-  background-color: #343a40; /* Luxe - Dark */
-}
-
-.filter-tropical:hover {
-  background-color: #fd3a3a; /* Tropical - Red */
-}
-
-.filter-lake:hover {
-  background-color: #1d88a3; /* Lake - Blue */
-}
-
-.filter-mountains:hover {
-  background-color: #6f42c1; /* Mountains - Purple */
-}
+/* Category Checkbox */

@@ -1,0 +1,85 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Include AOS for animations -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+<div class="container my-5">
+
+  <!-- Hero Section -->
+  <section class="text-center hero-section py-5" data-aos="fade-up">
+    <h1 class="display-4 fw-bold">Find Your Next Adventure</h1>
+    <p class="lead">Discover unique places to stay, tailored experiences, and unforgettable memories.</p>
+    <a href="/listings" class="btn btn-lg primary-btn mt-3 px-4 py-2">Explore Now</a>
+    <img src="https://images.unsplash.com/photo-1624772178159-5390a69a0ac4?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Scenic Travel" class="img-fluid mt-4 rounded shadow" />
+  </section>
+
+  <!-- Categories Grid -->
+  <section class="mt-5" data-aos="fade-up">
+    <h2 class="text-center mb-4">Top Categories</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card h-100 text-center">
+          <img src="https://images.unsplash.com/photo-1692263105285-50d1ac16ebe2?q=80&w=2057&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Mountain View" />
+          <div class="card-body mt-2">
+            <h5 class="card-title">Mountain Retreats</h5>
+            <p class="card-text">Escape into wild with stunning mountain stays.</p>
+            <a href="/listings" class="btn primary-btn">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 text-center">
+          <img src="https://images.unsplash.com/photo-1628870970360-aa3afb4c562d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Beach House" />
+          <div class="card-body mt-2">
+            <h5 class="card-title">Beachside Villas</h5>
+            <p class="card-text">Soak up the sun in luxury beach villas.</p>
+            <a href="/listings" class="btn primary-btn">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 text-center">
+          <img src="https://images.unsplash.com/photo-1726915257451-a14bd105ca55?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Forest Cabin" />
+          <div class="card-body mt-2">
+            <h5 class="card-title">Forest Cabins</h5>
+            <p class="card-text">Unplug and unwind surrounded by nature.</p>
+            <a href="/listings" class="btn primary-btn">Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="mt-5" data-aos="fade-up">
+    <h2 class="text-center mb-4">What Travelers Say</h2>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col">
+        <div class="card p-3 shadow-sm">
+          <p>"The booking was easy and the place was stunning! Highly recommend this platform."</p>
+          <p class="fw-bold mb-0">— Priya M., Goa</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card p-3 shadow-sm">
+          <p>"I found a beautiful cabin in the hills, perfect for my writing retreat. Amazing experience!"</p>
+          <p class="fw-bold mb-0">— Arjun K., Manali</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section text-center py-5 mt-5" data-aos="zoom-in">
+    <h2 class="fw-bold mb-3">Ready to Explore More?</h2>
+    <p class="mb-4">Choose from thousands of verified stays across India and beyond.</p>
+    <a href="/listings" class="btn btn-lg primary-btn px-4 py-2">Explore!!!</a>
+  </section>
+
+</div>
+
+<!-- AOS Animation Script -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>

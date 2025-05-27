@@ -1,60 +1,40 @@
 <% layout("/layouts/boilerplate") %>
 
+<style>
+    <% categories.forEach(function(category) { 
+        const safeClass = 'filter-' + category.category.toLowerCase().replace(/[^a-z0-9]/g, '');
+    %>
+        .<%= safeClass %>:hover {
+            background-color: <%= category.color %>;
+        }
+        .<%= safeClass %>.active {
+            background-color: <%= category.color %>;
+            color: white;
+        }
+    <% }); %>
+</style>
+
 <!-- Filters Section -->
 <div id="filters" class="d-flex align-items-center gap-3 p-3 mt-4 filter-container">
     <h5 class="mt-1">Filters:</h5>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-trending">
-        <i class="fa-solid fa-fire me-2"></i>
-        Trending
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-new">
-        <i class="fa-solid fa-star me-2"></i>
-        New
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-popular">
-        <i class="fa-solid fa-thumbs-up me-2"></i>
-        Popular
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-featured">
-        <i class="fa-solid fa-crown me-2"></i>
-        Featured
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-rooms">
-        <i class="fa-solid fa-bed me-2"></i>
-        Rooms
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-cabins">
-        <i class="fa-solid fa-house me-2"></i>
-        Cabins
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-omg">
-        <i class="fa-solid fa-exclamation me-2"></i>
-        OMG!
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-amazing-view">
-        <i class="fa-solid fa-eye me-2"></i>
-        Amazing View
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-beachfront">
-        <i class="fa-solid fa-water me-2"></i>
-        Beachfront
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-luxe">
-        <i class="fa-solid fa-gem me-2"></i>
-        Luxe
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-tropical">
-        <i class="fa-solid fa-leaf me-2"></i>
-        Tropical
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-lake">
-        <i class="fa-solid fa-water me-2"></i>
-        Lake
-    </div>
-    <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center filter-mountains">
-        <i class="fa-solid fa-mountain me-2"></i>
-        Mountains
-    </div>
+    <% categories.forEach(function(category) { 
+        const isActive = filter === category.category;
+        const safeClass = "filter-" + category.category.toLowerCase().replace(/[^a-z0-9]/g, '');
+    %>
+        <a href="?filter=<%= category.category.replace(" ", '_') %>"
+        class="filter p-2 rounded-3 d-flex align-items-center justify-content-center text-decoration-none <%= safeClass %> <%= isActive ? 'active' : '' %>">
+            <i class="fa-solid <%= category.icon %> me-2"></i>
+            <span><%= category.category %></span>
+        </a>
+    <% }); %>
+    <% if (filter) { %>
+        <!-- Clear Filter Button -->
+        <a href="/listings"
+        class="filter filter-clear p-2 rounded-3 d-flex align-items-center justify-content-center text-decoration-none bg-secondary text-white">
+            <i class="fa-solid fa-xmark me-2"></i>
+            <span>Clear Filter</span>
+        </a>
+    <% } %>
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-4">

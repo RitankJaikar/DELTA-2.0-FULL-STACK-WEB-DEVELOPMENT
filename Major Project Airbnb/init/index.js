@@ -4,6 +4,7 @@ const { sampleListings, sampleReviews } = require("./data.js");
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 const User = require("../models/user.js");
+const categories = require("../utils/categories.js");
 
 main()
   .then(() => {
@@ -70,13 +71,26 @@ const initDB = async () => {
 
   // Save listings with random owners
   for (const data of newInitData) {
+    // Get random number of categories between 0 and 3
+    const randomCategoryCount = Math.floor(Math.random() * 4); // 0 to 3
+
+    // Shuffle and select random categories
+    const shuffledCategories = [...categories].sort(() => 0.5 - Math.random());
+    const selectedCategories = shuffledCategories
+      .slice(0, randomCategoryCount)
+      .map((cat) => cat.category); // Only keep the category name
+
     const randomOwner = await getRandomUser(); // Assign a random owner
+
     const listing = new Listing({
       ...data,
       owner: randomOwner._id, // Set the owner to the random user
+      categories: selectedCategories,
     });
+
     await listing.save();
-    console.log(`Listing created by user ${randomOwner._id}`);
+
+    console.log(`Listing created by user ${randomOwner._id} with categories: ${selectedCategories.join(", ")}`);
   }
 
   console.log("Listings added.");

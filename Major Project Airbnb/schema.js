@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const categories = require("./utils/categories");
+const categoryNames = categories.map(c => c.category);
 
 const listingSchema = Joi.object({
     listing: Joi.object({
@@ -7,7 +9,8 @@ const listingSchema = Joi.object({
         location: Joi.string().required(),
         country: Joi.string().required(),
         price: Joi.number().required().min(0),
-        image: Joi.string().allow("", null)
+        image: Joi.string().allow("", null),
+        categories: Joi.array().items(Joi.string().valid(...categoryNames)).max(3)
     }).required()
 });
 
@@ -18,4 +21,10 @@ const reviewSchema = Joi.object({
     }).required()
 });
 
-module.exports = {listingSchema, reviewSchema};
+const userSchema = Joi.object({
+    email: Joi.string().email().required(),
+    username: Joi.string().required(),
+    password: Joi.string().required()
+})
+
+module.exports = {listingSchema, reviewSchema, userSchema};

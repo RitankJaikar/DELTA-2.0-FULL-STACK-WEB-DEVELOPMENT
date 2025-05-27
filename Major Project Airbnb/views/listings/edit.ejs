@@ -1,8 +1,22 @@
 <% layout("/layouts/boilerplate") %>
+
+<style>
+    <% categories.forEach(function(category) { %>
+        .filter-<%= category.category.toLowerCase().replace(/[^a-z0-9]/g, '') %>:hover {
+            background-color: <%= category.color %>;
+            cursor: pointer;
+        }
+    <% }); %>
+
+    .category-checkbpx label {
+        cursor: pointer;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <h3 class="mt-4">Edit Listing</h3>
-        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="mb-4 mt-4 needs-validation" novalidate enctype="multipart/form-data">
+        <form id="form" method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="mb-4 mt-4 needs-validation" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input id="title" type="text" value="<%= listing.title %>" name="listing[title]" class="form-control" required>
@@ -36,6 +50,7 @@
                     <div class="valid-feedback">Perfect! Price looks good.</div>
                     <div class="invalid-feedback">Please enter a valid price.</div>
                 </div>
+
                 <div class="col-md-8 mb-3">
                     <label for="country" class="form-label">Country</label>
                     <input id="country" type="text" value="<%= listing.country %>" name="listing[country]" class="form-control" required>
@@ -51,7 +66,121 @@
                 <div class="invalid-feedback">Please enter a valid location.</div>
             </div>
 
+            <!-- Category selection using checkboxes -->
+            <% if (listing.categories && listing.categories.length > 0) { %>
+            <div class="mb-3">
+                <label class="form-label">Previously Selected Categories</label><br>
+                <div class="d-flex flex-wrap">
+                    <% listing.categories.forEach(category => { %>
+                        <% const categoryDetails = categories.find(cat => cat.category === category); %>
+                        <% if (categoryDetails) { %>
+                            <div class="badge me-2" style="background-color: <%= categoryDetails.color %>;">
+                                <i class="fa-solid <%= categoryDetails.icon %> me-2"></i>
+                                <%= categoryDetails.category %>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+            </div>
+            <% } %>
+            <div class="mb-3 category-checkbpx">
+                <label class="form-label">Categories (Select up to 3)</label>
+                <div id="categories" class="d-flex flex-wrap gap-3">
+                    <% categories.forEach(function(category) { 
+                        const safeClass = 'filter-' + category.category.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    %>
+                        <div class="position-relative">
+                            <input type="checkbox" 
+                                value="<%= category.category %>" 
+                                name="listing[categories][]"
+                                id="<%= category.category %>" 
+                                class="form-check-input d-none"
+                                data-color="<%= category.color %>"
+                                onchange="updateCategoryStyle('<%= category.category %>', '<%= category.color %>');"
+                            >
+                            <div class="filter p-2 rounded-3 d-flex align-items-center justify-content-center position-relative <%= safeClass %>">
+                                <i class="fa-solid <%= category.icon %> me-2"></i>
+                                <%= category.category %>
+                                <label for="<%= category.category %>" class="stretched-link position-absolute top-0 start-0 w-100 h-100 m-0"></label>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="valid-feedback">Great! You've selected categories.</div>
+                <div class="invalid-feedback">Please select up to 3 categories.</div>
+            </div>
+
             <button type="submit" class="btn btn-dark primary-btn">Update</button>
         </form>
     </div>
 </div>
+
+<script>
+    // Assume this is the array of pre-selected categories for the listing
+    const selectedCategories = <%- JSON.stringify(listing.categories) %>;
+
+    // Function to pre-select checkboxes based on selectedCategories
+    function preSelectCategories() {
+        const checkboxes = document.querySelectorAll('#categories input[type="checkbox"]');
+
+        checkboxes.forEach(function(checkbox) {
+            const categoryValue = checkbox.value;
+            if (selectedCategories.includes(categoryValue)) {
+                checkbox.checked = true;  // Check the checkbox if it is in the selectedCategories array
+                // ✅ Manually call the updateCategoryStyle to reflect visual change
+                updateCategoryStyle(categoryValue, checkbox.getAttribute("data-color"));
+            }
+        });
+    }
+    // Call the function to pre-select the categories when the page is loaded
+    preSelectCategories();
+
+    const categoryCheckboxes = document.querySelectorAll('input[name="listing[categories][]"]');
+    const form = document.querySelector('#form');
+
+    //can select only 3 checkbox/category at a time
+    function handleCheckboxLimit() {
+        const selected = Array.from(categoryCheckboxes).filter(cb => cb.checked);
+
+        if (selected.length >= 3) {
+            categoryCheckboxes.forEach(cb => {
+                if (!cb.checked) cb.disabled = true;
+            });
+        } else {
+            categoryCheckboxes.forEach(cb => cb.disabled = false);
+        }
+    }
+
+    // Initial check in case some categories are already pre-checked
+    handleCheckboxLimit();
+
+    // Run on checkbox change
+    categoryCheckboxes.forEach(cb => {
+        cb.addEventListener('change', handleCheckboxLimit);
+    });
+
+    // Check on submit too, not more than 3 category
+    form.addEventListener('submit', function (event) {
+        const selected = Array.from(categoryCheckboxes).filter(cb => cb.checked);
+
+        if (selected.length > 3) {
+            event.preventDefault();
+            alert('You can only select up to 3 categories.');
+        }
+    });
+
+    // corresponding .filter div's background color becomes the category color
+    function updateCategoryStyle(category, color) {
+        const safeClass = 'filter-' + category.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const checkbox = document.getElementById(category);
+        const filterDiv = checkbox.nextElementSibling;
+
+        if (checkbox.checked) {
+            filterDiv.style.backgroundColor = color;
+            filterDiv.style.color = "#fff"; // optional: better contrast
+        } else {
+            filterDiv.style.backgroundColor = "";
+            filterDiv.style.color = ""; // reset to default
+        }
+    }
+</script>

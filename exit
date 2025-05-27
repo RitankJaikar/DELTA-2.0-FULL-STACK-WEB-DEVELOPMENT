@@ -1,0 +1,30 @@
+[33mcommit a3fda8ac3f466b983eec94805b6b10a5e87315bf[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: RitankJaikar <ritank.jaikar@gmail.com>
+Date:   Tue Apr 29 00:45:31 2025 +0530
+
+    New Commit
+
+[33mcommit babc4ecbc1c2f59aed429f992d7d13e4cdd84674[m
+Author: RitankJaikar <ritank.jaikar@gmail.com>
+Date:   Mon Feb 24 05:50:09 2025 +0530
+
+    New Commit
+
+[33mcommit 27846b05c4fa45a266e642fe395e65f322bf64e5[m
+Merge: 0bf4a5d 6debb50
+Author: RitankJaikar <ritank.jaikar@gmail.com>
+Date:   Thu Sep 5 22:37:36 2024 +0530
+
+    Merge branch 'main' of https://github.com/RitankJaikar/DELTA-2.0-FULL-STACK-WEB-DEVELOPMENT
+
+[33mcommit 0bf4a5d9a6e81ddd49ca1d11d376e431dae44c4a[m
+Author: RitankJaikar <ritank.jaikar@gmail.com>
+Date:   Thu Sep 5 22:30:58 2024 +0530
+
+    Full add and commit
+
+[33mcommit 6debb50025787788b0770e03cc5053da03aad522[m
+Author: Ritank Jaikar <ritank.jaikar@gmail.com>
+Date:   Thu Sep 5 22:15:17 2024 +0530
+
+    Initial commit

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
+const categories = require("../utils/categories");
 
 const listningSchema = new Schema({
     title: {
@@ -35,6 +36,10 @@ const listningSchema = new Schema({
           type: [Number],
           required: true
         }
+    },
+    categories: {
+        type: [String],
+        enum: categories.map(c => c.category)
     }
 });
 

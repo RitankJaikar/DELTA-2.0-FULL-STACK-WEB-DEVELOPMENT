@@ -22,6 +22,23 @@
                       </form>
                   </div>
                 <% } %>
+                
+                <% if (listing.categories && listing.categories.length > 0) { %>
+                <div class="mt-4 mb-4">
+                  <h4>Selected Categories</h4>
+                  <div class="d-flex flex-wrap">
+                      <% listing.categories.forEach(category => { %>
+                          <% const categoryDetails = categories.find(cat => cat.category === category); %>
+                          <% if (categoryDetails) { %>
+                              <div class="badge me-2" style="background-color: <%= categoryDetails.color %>;">
+                                  <i class="fa-solid <%= categoryDetails.icon %> me-2"></i>
+                                  <%= categoryDetails.category %>
+                              </div>
+                          <% } %>
+                      <% }) %>
+                  </div>
+                </div>
+                <% } %>
 
                 <div class="map-container">
                   <h3>Where you'll be</h3>

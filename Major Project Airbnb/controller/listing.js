@@ -4,12 +4,33 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingClient = mbxGeocoding({ accessToken: process.env.MAP_TOKEN });
 
 const index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs",{allListings});
+    let query = {};
+    let filter = req.query.filter;
+    let search = req.query.search;
+
+    // Apply category filter if present
+    if (filter) {
+        filter = filter.replace("_", " ");
+        query.categories = { $in: [filter] };
+    }
+
+    // Apply search filter if present
+    if (search) {
+        query.title = { $regex: search, $options: "i" };
+    }
+
+    const allListings = await Listing.find(query);
+
+    res.render("listings/index.ejs", { allListings, filter, search });
+};
+
+const userindex = async (req, res) => {
+    const ownerId = req.user._id;
+    const userListings = await Listing.find({ owner: ownerId });
+    res.render("listings/userindex.ejs", { userListings });
 };
 
 const renderNewForm = async (req, res) => {
-    // console.log(req.user);
     res.render("listings/new.ejs");
 };
 
@@ -38,7 +59,7 @@ const createListing = async (req, res) => {
     // if(!req.body.listing) {  //better use asyncWrap for all
     //     throw new ExpressError(400, "Send valid data for listing");
     // }
-
+    
     let response = await geocodingClient.forwardGeocode({
         query: req.body.listing.location + ", " + req.body.listing.country,
         limit: 1
@@ -55,7 +76,7 @@ const createListing = async (req, res) => {
     newListing.geometry = response.body.features[0].geometry;
 
     const savedListing = await newListing.save();
-    console.log(savedListing);
+    // console.log(savedListing);
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
@@ -95,4 +116,4 @@ const deleteListing = async (req, res) => {
     res.redirect("/listings");
 };
 
-module.exports = { index, renderNewForm, showlisting, createListing, renderEditForm, editListing, deleteListing };
+module.exports = { index, renderNewForm, showlisting, createListing, renderEditForm, editListing, deleteListing, userindex };

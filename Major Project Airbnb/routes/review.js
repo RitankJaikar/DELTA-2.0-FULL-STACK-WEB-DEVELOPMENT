@@ -18,7 +18,7 @@ const redirectUrl = (req, res, next) => {
 reviewRouter.post(
   "/",
   redirectUrl,
-  isLoggedIn("LogIn to add comment!"),
+  isLoggedIn("Log In to add comment!"),
   validateReview,
   asyncWrap(reviewController.createReview)
 );
@@ -27,7 +27,7 @@ reviewRouter.post(
 reviewRouter.delete(
   "/:reviewId",
   redirectUrl,
-  isLoggedIn("LogIn to delete comment!"),
+  isLoggedIn("Log In to delete comment!"),
   isReviewAuthor,
   asyncWrap(reviewController.deleteReview)
 );
