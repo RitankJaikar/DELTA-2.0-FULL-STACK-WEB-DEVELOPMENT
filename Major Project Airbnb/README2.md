@@ -37,6 +37,7 @@ The application follows the **MVC (Model-View-Controller)** design pattern:
 
 ## 📁 File Structure
 
+```
 airbnb-clone/
 │
 ├── init/                     # Scripts to initialize database
@@ -98,6 +99,7 @@ airbnb-clone/
 ├── package-lock.json         # Exact dependency tree
 ├── .env                      # Secure Enviroment variables
 └── README.md                 # Project documentation
+```
 
 ---
 
